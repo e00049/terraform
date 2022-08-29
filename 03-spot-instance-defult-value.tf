@@ -2,6 +2,9 @@ resource "aws_spot_instance_request" "e00049-DevOps-Jenkins" {
   ami               = "ami-0729e439b6769d6ab"
   spot_price        = "0.1"
   instance_type     = "t3a.medium"
+  wait_for_fulfillment = true
+  count = 2      
+  spot_type         = "one-time"  
   subnet_id         = data.aws_subnet.e00049-default-subnet.id
   key_name          = "e00049-DevOps-Tools-Key"  
   vpc_security_group_ids = [data.aws_security_group.e00049-default-securitygroup.id]
