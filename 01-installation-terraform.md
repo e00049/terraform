@@ -12,7 +12,7 @@ sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(l
 
 # Step 04: Update to add the repository, and install the Terraform CLI.
 
-sudo apt-get update && sudo apt-get install terraform
+sudo apt-get update && sudo apt-get install terraform -y
 
 # Step 05: Verify the installation
 
