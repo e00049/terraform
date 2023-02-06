@@ -33,8 +33,10 @@ resource "aws_route_table" "dev-public-rt" {
 }
 
 resource "aws_subnet" "dev-public-subnet" {
-  vpc_id     = aws_vpc.dev-vpc.id
-  cidr_block = "192.168.1.0/26"
+  vpc_id            = aws_vpc.dev-vpc.id
+  cidr_block        = "192.168.1.0/26"
+  availability_zone = data.aws_availability_zones.available.names[0]
+  map_public_ip_on_launch = true
 
   tags = {
     Name = "dev-public-subnet"

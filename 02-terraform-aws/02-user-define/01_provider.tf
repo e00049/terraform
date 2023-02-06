@@ -8,9 +8,9 @@ terraform {
 }
 
 provider "aws" {
-  profile = "dev"
-  region  = "us-west-2"
-#   alias   = "dev-project"
+  # profile = "dev"
+  region = "us-west-2"
+  #   alias   = "dev-project"
 }
 
 #   provider      = aws.tf57-mumbai-production

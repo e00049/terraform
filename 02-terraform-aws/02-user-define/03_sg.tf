@@ -2,7 +2,7 @@
 resource "aws_security_group" "dev-sg" {
   name        = "dev-sg"
   description = "allow all traffic"
-  vpc_id     = aws_vpc.dev-vpc.id
+  vpc_id      = aws_vpc.dev-vpc.id
 
   ingress {
     description = "SSH protocol"
