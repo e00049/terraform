@@ -1,7 +1,7 @@
 # Terraform core commands: 
-## terraform -help             - Show this help output, or the help for a specified subcommand.
-## terraform -version          - An alias for the "version" subcommand.
-## terraform init              - terraform init
+### terraform -help             - Show this help output, or the help for a specified subcommand.
+### terraform -version          - An alias for the "version" subcommand.
+### terraform init              - terraform init
   terraform init --upgrade    - upgrade or downgrade
   terraform fmt               - terraform format
   terraform validate          - validate the file
