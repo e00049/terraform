@@ -8,8 +8,8 @@ terraform {
 }
 
 provider "aws" {
-  # profile = "dev"
-  region = "us-west-2"
+  profile = "dev"
+  region  = "us-west-2"
   #   alias   = "dev-project"
 }
 

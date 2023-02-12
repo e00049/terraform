@@ -34,19 +34,40 @@ resource "aws_route_table" "dev-public-rt" {
   }
 }
 
-resource "aws_subnet" "dev-public-subnet" {
+data "aws_availability_zones" "available" { # 01. data rources block
+  state = "available"
+}
+
+resource "aws_subnet" "dev-public-subnet-01" {
   vpc_id                  = aws_vpc.dev-vpc.id
   cidr_block              = "192.168.1.0/26"
   availability_zone       = data.aws_availability_zones.available.names[0]
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "dev-public-subnet"
+    Name = "dev-public-subnet-01"
     env  = "dev"
   }
 }
 
-resource "aws_route_table_association" "association-rt-subnet" {
-  subnet_id      = aws_subnet.dev-public-subnet.id
+resource "aws_subnet" "dev-public-subnet-02" {
+  vpc_id                  = aws_vpc.dev-vpc.id
+  cidr_block              = "192.168.1.64/26"
+  availability_zone       = data.aws_availability_zones.available.names[1]
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "dev-public-subnet-02"
+    env  = "dev"
+  }
+}
+
+resource "aws_route_table_association" "association-rt-subnet-01" {
+  subnet_id      = aws_subnet.dev-public-subnet-01.id
+  route_table_id = aws_route_table.dev-public-rt.id
+}
+
+resource "aws_route_table_association" "association-rt-subnet-02" {
+  subnet_id      = aws_subnet.dev-public-subnet-02.id
   route_table_id = aws_route_table.dev-public-rt.id
 }
