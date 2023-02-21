@@ -21,6 +21,10 @@ locals {
   instance_type = lookup(var.instance_type, var.server_type) # 02. lookup function
 }
 
+locals {
+  subnets = [aws_subnet.dev-public-subnet-01.id, aws_subnet.dev-public-subnet-02.id] # Cross reference
+}
+
 variable "volume_size" {
   description = "volume type"
   type        = number
@@ -49,3 +53,6 @@ variable "initial_db_name" {
   sensitive   = true
 }
 
+variable "instance_tag" {
+  type = list(any)
+}

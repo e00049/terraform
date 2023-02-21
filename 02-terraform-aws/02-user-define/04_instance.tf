@@ -14,9 +14,10 @@ data "aws_ami" "updated_ami" {
 
 # Create EC2 Instance 
 resource "aws_instance" "linux-webserver" {
+  count                  = 2
   ami                    = data.aws_ami.updated_ami.id
   instance_type          = local.instance_type
-  subnet_id              = aws_subnet.dev-public-subnet-01.id
+  subnet_id              = local.subnets[count.index]
   key_name               = aws_key_pair.dev-key-name.key_name
   vpc_security_group_ids = [aws_security_group.dev-sg.id]
 
@@ -26,10 +27,7 @@ resource "aws_instance" "linux-webserver" {
     delete_on_termination = var.delete_on_termination
   }
 
-  tags = {
-    Name = "linux-webserver"
-    env  = "dev"
-  }
+  tags = var.instance_tag[count.index]
 
   provisioner "local-exec" {
     command = "echo ${self.public_ip} > public_ip.txt"
