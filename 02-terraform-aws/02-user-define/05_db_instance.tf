@@ -20,3 +20,27 @@ resource "aws_db_instance" "dev_database" {
   availability_zone      = "us-west-2a"
   db_name                = var.initial_db_name
 }
+
+resource "random_password" "password-for-db" {
+  length           = 10
+  special          = true
+  override_special = "#!()_"
+}
+
+resource "aws_ssm_parameter" "rds-passwd" {
+  name        = "/dev/dev_database/passwd"
+  description = "master passwd of RDS"
+  type        = "SecureString"
+  value       = random_password.password-for-db.result
+}
+
+data "aws_ssm_parameter" "rds_passwd" {
+  name = "/dev/dev_database/passwd"
+  depends_on = [
+    aws_ssm_parameter.rds-passwd
+  ]
+}
+
+
+
+
