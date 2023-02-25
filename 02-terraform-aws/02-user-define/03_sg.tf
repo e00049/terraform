@@ -25,3 +25,16 @@ resource "aws_security_group" "dev-sg" {
   }
 }
 
+/*
+  dynamic "ingress" {
+    for_each = ["8000", "9000", "7000", "1000"]
+    content {
+      description = "Allow port UDP"
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "udp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+  }
+*/
+  
