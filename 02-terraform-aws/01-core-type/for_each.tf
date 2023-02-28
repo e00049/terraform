@@ -1,3 +1,5 @@
+ # https://developer.hashicorp.com/terraform/tutorials/configuration-language/troubleshooting-workflow#format-the-configuration
+
 resource "aws_instance" "web_app" {
 #   for_each               = aws_security_group.*.id
    for_each               = local.security_groups
@@ -35,8 +37,6 @@ locals {
  }
     
 
- # https://developer.hashicorp.com/terraform/tutorials/configuration-language/troubleshooting-workflow#format-the-configuration
-
  output "instance_public_ip" {
    description = "Public IP address of the EC2 instance"
 -   value       = aws_instance.web_app.public_ip
@@ -48,3 +48,6 @@ output "instance_name" {
 -  value        = aws_instance.web_app.tags
 +  value        = [for instance in aws_instance.web_app: instance.tags.Name]
 }
+
+   
+   
