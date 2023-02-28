@@ -33,6 +33,9 @@ locals {
 -   value       = aws_instance.web_app.id
 +   value       = [for instance in aws_instance.web_app: instance.id]
  }
+    
+
+ # https://developer.hashicorp.com/terraform/tutorials/configuration-language/troubleshooting-workflow#format-the-configuration
 
  output "instance_public_ip" {
    description = "Public IP address of the EC2 instance"
