@@ -13,4 +13,7 @@
 ### terraform state list        - list out resources created
 ### terraform rm aws_intace.my_instance            --> my instance will not managed by terraform
 ### terraform apply -target aws_intace.my_instance --> create perticular module
-### terraform -chdir=/which/project/dir            --> which project files have to execute.** -->
+### terraform -chdir=/which/project/dir            --> which project files have to execute.** 
+### terraform workspace new development - create new workspace and swicted into that
+### terraform workspace list   - list out terraform workspaces
+### terraform select workspace development - select the development workspace 
