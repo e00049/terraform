@@ -55,6 +55,7 @@
                                         a hosted version of Terraform that provides collaborative infrastructure as code.  
  
 ---------------------------------------------------------------------------------------
+
 Terraform blocks and its functions:
 
  01. Terraform Block - In Terraform, a Terraform block is used to define global settings and configurations for a Terraform project.
@@ -152,7 +153,7 @@ Terraform blocks and its functions:
 In Terraform, there are several types of variables that can be used to define and configure infrastructure resources. 
 Here are some of the most commonly used types of variables: (Source: chatGPT)
 
-   01. String: A string variable is a sequence of characters, and it is used to store text values.
+01. String: A string variable is a sequence of characters, and it is used to store text values.
     # Example for string type:
     variable "type_ami" {
       description = "machine_type"
@@ -160,7 +161,7 @@ Here are some of the most commonly used types of variables: (Source: chatGPT)
       default     = "ami-0db245b76e5c21ca1"
     }
     
-   02. Number: A number variable is used to store numeric values. Terraform supports integer and floating-point numbers.
+02. Number: A number variable is used to store numeric values. Terraform supports integer and floating-point numbers.
     # Example for number type:
     variable "size_ebs" {
       description = "ebs_size"
@@ -168,7 +169,7 @@ Here are some of the most commonly used types of variables: (Source: chatGPT)
       default     = 8
     }
     
-   03. Bool: A boolean variable is used to store true or false values.
+03. Bool: A boolean variable is used to store true or false values.
     # Example for boolen type:
     variable "ebs_live" {
       description = "ebs_delete"
@@ -176,7 +177,7 @@ Here are some of the most commonly used types of variables: (Source: chatGPT)
       default     = true
     }
 
-   04. List: A list variable is used to store an ordered collection of values. The elements in a list can be of any type.
+04. List: A list variable is used to store an ordered collection of values. The elements in a list can be of any type.
     # Example for List type:
     variable "type_instance" {
       description = "instance_type"
@@ -184,7 +185,7 @@ Here are some of the most commonly used types of variables: (Source: chatGPT)
       default     = ["t2.micro", "t3a.medium"]
     }
 
-   05. Map: A map variable is used to store a collection of key-value pairs. The keys and values in a map can be of any type.
+05. Map: A map variable is used to store a collection of key-value pairs. The keys and values in a map can be of any type.
     # Example for map type:
     variable "name_tag" {
       description = "name_tag"
@@ -202,7 +203,7 @@ Here are some of the most commonly used types of variables: (Source: chatGPT)
   TF_VAR_<variable_name>=<value>            
   TF_LOG_PATH=/var/log/terraform.txt
   
-variable order of precedence:
+Variable order of Precedence:
   01. terraform plan/apply/destroy -var (or) -var-file=/home/e00049/terraform/dev.txt
   02. terraform plan/apply/destroy *.auto.tfvars (or) *.atuo.tfvars.json - files_names
   03. terraform plan/apply/destroy terraform.tfvars.json - file_name
@@ -220,4 +221,4 @@ Meta Arguments:
 
 -------------------------------------------------------------------------------------------------------- 
   
-  P.S: Source: chatGPT
+  P.S: Some of contents form chatGPT.
