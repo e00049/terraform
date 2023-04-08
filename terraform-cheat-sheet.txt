@@ -1,5 +1,137 @@
-Mate Arguments:
 
-01. provider
-02. count 
-03. for_each
+---> Core commands of terraform: 
+  01. terraform init                  -> Downloading and installing any required provider plugins, Moudules. 
+      terraform init -upgrade         -> Is a command used in Terraform to upgrade the installed provider plugins to their latest version.
+      terraform init -reconfigure     -> Terraform to force a reconfiguration of the backend.
+      terraform init -migrate-state   -> Command used in Terraform to migrate the state of the infrastructure from one backend to another.
+       
+  02. terraform validate              -> To check the syntax and config of a Terraform module or config files, without creating or modifying any resources.
+      terraform validate -json        -> To check the syntax and config of a Terraform module or configuration files and output the results in JSON format.
+  
+  03. terraform plan                  -> To create an execution plan for your infrastructure, based on the current Terraform configuration.    
+      terraform plan -out=path        -> To create an execution plan for your infrastructure and save the plan to a file.
+  
+  04. terraform apply                 -> Creates or updates infrastructure according to Terraform configuration files in the current directory.
+      terraform apply --auto-approve  -> Terraform to apply the changes to your infrastructure without prompting for approval.
+      terraform apply -parallelism=10 -> Limit the number of parallel resource operations. Defaults to 10.
+      terraform apply -refersh-only   -> That can be used to update the state of the Terraform-managed infrastructure without making any changes to it.
+      terraform apply -replace=address  -> Force replacement of a particular resource instance using its resource address. 
+      terraform apply -target=address -> To creating operation to only the given module, resource, or resource instance and all of its dependencies.
+      terraform apply -lock-timeout=10s -> Duration to retry a state lock. 
+      
+  05. terraform destroy               -> terraform destroy is a command used in Terraform to destroy all resources created by a Terraform configuration.
+      terraform apply -destroy        -> To destroy all resources created by a Terraform configuration. alias of terraform apply -destroy 
+      
+---> Other commands: 
+  01. terraform show                 -> The terraform show command is used to display the current state or configuration of a Terraform-managed infrastructure
+      terraform show -json           -> If specified, output the Terraform plan or state in a machine-readable form -json
+      
+  02. terraform state list           -> This command lists all of the resources in the state file.
+      terraform state show <address> -> This command shows the attributes of a specific resource in the state file.
+      terraform state pull           -> Current state and saves it to a local file.
+      terraform state push           -> This command updates the state on the remote backend with the current local state file.
+      terraform state rm <address>   -> Remove instances from the state file. 
+      terraform state mv <S> <D>     -> Rename or Move to other state file. 
+  
+  03. terraform import <config_block> <address> -> terraform import is a command in Terraform that allows you to import an existing resource into your Terraform state.
+  
+  04. terraform output              -> In Terraform that allows you to view the values of output variables defined in your Terraform configuration.
+  
+  05. terraform get                 -> To download and install any external modules or plugins that are required by your Terraform configuration. 
+  
+More other function commands:
+  01. terraform providers
+  02. terraform workspace
+  03. terraform login 
+ 
+Debbuing:
+  TF_LOG=<State> -> TRACE, DEBUG, INFO, WARNING, ERROR.
+  TF_VAR_<variable_name>=<value>            
+  TF_LOG_PATH=/var/log/terraform.txt
+  
+Order of Precedence:
+  01. terraform plan/apply/destroy -var (or) -var-file=/home/e00049/terraform/dev.txt
+  02. terraform plan/apply/destroy *.auto.tfvars (or) *.atuo.tfvars.json - files_names
+  03. terraform plan/apply/destroy terraform.tfvars.json - file_name
+  04. terraform plan/apply/destroy terraform.tfvars - file_name
+  05. environment variables TF_VAR_ami_name=ami-12345678
+  06. default variable      - from variables block default value.
+
+Meta Arguments:
+  01. provider
+  02. count 
+  03. for_each
+  04. locals 
+  05. alias 
+
+Variables in Terraform: 
+  string   - terraform
+  number   - 12345
+  bool     - true | false 
+  list     - [ 1, "terrafomr", "true" ]
+  map      - { key1 = "value1", key2 = "vlaue2" }
+
+Types of Blokc in Terraform:
+
+01. Terraform       - In Terraform, a Terraform block is used to define global settings and configurations for a Terraform project.
+
+02. Provider Block  - This block is used to configure a provider, which is a plugin that Terraform uses to interact with a specific cloud provider, 
+                      such as AWS, Azure, or Google Cloud Platform. The provider block specifies the provider type, version, and credentials.
+
+03. Data Block      - In Terraform, a data block is used to define a data source, 
+                      which is a read-only source of data from an external system that can be used in Terraform configuration.
+                      The data block allows you to retrieve information about an existing resource
+                      
+04. Resource Block  - This is the most common type of block in Terraform, and it is used to define a single infrastructure resource,
+                      such as an AWS EC2 instance or an Azure virtual machine.
+05. Module Block    - This block is used to define a module, which is a set of Terraform configurations that can be reused across different projects. 
+                      A module block has a source argument that specifies the location of the module's configuration files.
+                      
+06. Variable Block  - In Terraform, a variable block is used to define input variables that can be passed to your Terraform configuration at runtime.
+
+07. Output Block    - This block is used to define output values that are generated by Terraform configuration after it is applied. 
+                      An output block has a name and a value that is computed from the configuration.
+
+Terraform blocks and its functions:
+
+  01. Terraform Block:
+    
+    terraform {
+      required_version = "1.4.4"
+      backend "local" {
+        path = /home/e00049/terraform/dev
+      }
+      required_providers {
+        aws = {
+          source = "hashicorp/aws"
+          version = "4.62.0"
+        }
+    }
+    
+    02. Provider Block:
+    
+    provider "aws" {
+      version = "~> 4.0"
+      region  = "us-east-1"
+      profile = "developement"
+      alias   = "developement"
+    }
+  
+  
+    04. Resource Block:
+    
+    resource "aws_instance" "web_server" {    ---> resource     - type of resources, 
+      machine_type  = "t2.micro"              ---> aws_instace  - which resource
+    }                                         ---> web_server   - reference name
+                                              ---> machine_type - argument name
+                                              ---> t2.micro     - argument value 
+                                              
+    
+    
+    
+
+  
+  
+  
+  
+  
