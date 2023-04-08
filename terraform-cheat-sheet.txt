@@ -1,5 +1,6 @@
 
----> Core commands of terraform: 
+---> Core commands: 
+
   01. terraform init                  -> Downloading and installing any required provider plugins, Moudules. 
       terraform init -upgrade         -> Is a command used in Terraform to upgrade the installed provider plugins to their latest version.
       terraform init -reconfigure     -> Terraform to force a reconfiguration of the backend.
@@ -23,6 +24,7 @@
       terraform apply -destroy        -> To destroy all resources created by a Terraform configuration. alias of terraform apply -destroy 
       
 ---> Other commands: 
+
   01. terraform show                 -> The terraform show command is used to display the current state or configuration of a Terraform-managed infrastructure
       terraform show -json           -> If specified, output the Terraform plan or state in a machine-readable form -json
       
@@ -39,15 +41,23 @@
   
   05. terraform get                 -> To download and install any external modules or plugins that are required by your Terraform configuration. 
   
-More other function commands:
-  01. terraform providers
-  02. terraform workspace
-  03. terraform login 
+---> More other commands:
+
+  01. terraform providers            -> Command is used to manage and display information about the providers used in a Terraform configuration.
+      terraform providers lock       -> The terraform providers command can be used to lock the versions of the providers used in a Terraform configuration.
+      
+  02. terraform workspace show       -> Show the name of the current workspace
+      terraform workspace list       -> List Terraform workspaces 
+      terraform workspace new dev    -> To create new workspac and switch to dev workspace
+      terraform workspace select dev -> Select give workspace name
+      
+  03. terraform login                -> The terraform login command is used to authenticate with Terraform Cloud, 
+                                        a hosted version of Terraform that provides collaborative infrastructure as code.  
  
 ---------------------------------------------------------------------------------------
 Terraform blocks and its functions:
 
- 01. Terraform  - In Terraform, a Terraform block is used to define global settings and configurations for a Terraform project.
+ 01. Terraform Block - In Terraform, a Terraform block is used to define global settings and configurations for a Terraform project.
     
     terraform {
       required_version = "1.4.4"
@@ -61,7 +71,7 @@ Terraform blocks and its functions:
         }
     }  
     
- 02. Provider Block  - This block is used to configure a provider, which is a plugin that Terraform uses to interact with a specific cloud provider, 
+ 02. Provider Block - This block is used to configure a provider, which is a plugin that Terraform uses to interact with a specific cloud provider, 
                       such as AWS, Azure, or Google Cloud Platform. The provider block specifies the provider type, version, and credentials.
     
     provider "aws" {
@@ -88,8 +98,8 @@ Terraform blocks and its functions:
        }
    }
                                      
-04. Module Block    - This block is used to define a module, which is a set of Terraform configurations that can be reused across different projects. 
-                      A module block has a source argument that specifies the location of the module's configuration files.                                            
+04. Module Block  - This block is used to define a module, which is a set of Terraform configurations that can be reused across different projects. 
+                    A module block has a source argument that specifies the location of the module's configuration files.                                            
 
     module "my_vpc" {
       source   = "./modules/vpc"
@@ -101,7 +111,7 @@ Terraform blocks and its functions:
       vpc_id = module.my_vpc.vpc_id
     }
     
- 05. Resource Block  - This is the most common type of block in Terraform, and it is used to define a single infrastructure resource,
+ 05. Resource Block - This is the most common type of block in Terraform, and it is used to define a single infrastructure resource,
                       such as an AWS EC2 instance or an Azure virtual machine.
                       
     resource "aws_instance" "webserver" {
@@ -206,6 +216,7 @@ Meta Arguments:
   03. for_each
   04. locals 
   05. alias 
+  06. dynamic
 
 -------------------------------------------------------------------------------------------------------- 
   
