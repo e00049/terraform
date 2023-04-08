@@ -151,7 +151,7 @@ Terraform blocks and its functions:
 ---------------------------------------------------------------------------------------
 
 In Terraform, there are several types of variables that can be used to define and configure infrastructure resources. 
-Here are some of the most commonly used types of variables: (Source: chatGPT)
+Here are some of the most commonly used types of variables:
 
 01. String: A string variable is a sequence of characters, and it is used to store text values.
     # Example for string type:
@@ -221,4 +221,3 @@ Meta Arguments:
 
 -------------------------------------------------------------------------------------------------------- 
   
-  P.S: Some of contents from chatGPT.
