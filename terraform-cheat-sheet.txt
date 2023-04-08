@@ -221,4 +221,4 @@ Meta Arguments:
 
 -------------------------------------------------------------------------------------------------------- 
   
-  P.S: Some of contents form chatGPT.
+  P.S: Some of contents from chatGPT.
