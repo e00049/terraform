@@ -219,5 +219,16 @@ Meta Arguments:
   05. alias 
   06. dynamic
 
--------------------------------------------------------------------------------------------------------- 
-  
+-------------------------------------------------------------------------------------------
+
+Classification of Terraform:
+01. OpenSource(OSS)/Command Line Interface(CLI).
+
+02. Terraform Cloud 
+     Terraform Cloud - Free
+     Terraform Cloud - Team
+     Terraform Cloud - Team and Governance
+     Terraform Cloud - Business
+     
+03. Terraform Enterprise     
+
