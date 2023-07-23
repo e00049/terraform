@@ -1,0 +1,219 @@
+
+mkdir  -p modules/{instances,storage}
+
+touch modules/instances/{instances.tf,outputs.tf,variables.tf} \
+	  modules/storage/{storage.tf,outputs.tf,variables.tf}  main.tf variables.tf
+
+# --------------------------------------------------------------------------------
+
+provider "google" {
+  project    = "qwiklabs-gcp-03-6e3bbe41b2f9"
+  region     = "us-east1"
+  zone       = "us-east1-d"  
+}
+
+module "instances" {
+  source = "./modules/instances"
+  region       = "us-east1"
+  zone         = "us-east1-d"
+  machine-type = "n1-standard-1"
+  instance_names = [ "tf-instance-1", "tf-instance-2"]
+
+}
+
+# ----------------------------------------------------------------------
+
+resource "google_compute_instance" "instance" {
+  count        = length(var.instance_names)
+  name         = var.instance_names[count.index]
+  zone         = var.zone
+  machine_type = var.machine-type
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-10"
+      }
+  }
+  
+  metadata_startup_script = <<-EOT
+    #!/bin/bash
+  EOT
+  
+  allow_stopping_for_update = true
+
+  network_interface {
+    network = "default"
+  }
+}
+
+# ----------------------------------------------------------------------
+
+variable "region" {
+  description = "The location of the region."
+  type        = string
+}
+
+variable "zone" {
+  description = "The name of the zone."
+  type        = string
+}
+
+variable "instance_names" {
+  type = list(string)
+  default = []
+}
+
+variable "machine-type" {
+  description = "The instance name."
+  type        = string
+}
+
+# ----------------------------------------------------------------------------------
+
+terraform init
+
+terraform import module.instances.google_compute_instance.instance[0] tf-instance-1
+terraform import module.instances.google_compute_instance.instance[1] tf-instance-2
+
+# --------------------------------------------------------------------------------------
+
+module "backend-bucket-here" {
+  source      = "./modules/storage" 
+  bucket-name = "tf-bucket-892181"
+}
+
+
+resource "google_storage_bucket" "test-bucket-for-state" {
+  name        = var.bucket-name
+  location    = "US"
+  force_destroy = true  
+  uniform_bucket_level_access = true
+}
+
+
+variable "bucket-name" {
+  description = "The bucket-name."
+  type        = string
+}
+
+# -------------------------------------------------------------------------------------
+
+terraform {
+  backend "gcs" {
+    bucket  = "backend-bucket-here"
+    prefix  = "terraform/state"
+	}
+}	
+
+After to remote backend to local backend
+
+terraform {
+  backend "local" {
+    path = "terraform/state/terraform.tfstate"
+  }
+}
+
+terraform init -migrate-state
+# ------------------------------------------------------------------------------------------
+
+terraform destroy -target=module.instances.google_compute_instance.instance[2]
+
+
+module "vpc" {
+    source  = "terraform-google-modules/network/google"
+    version = "~> 6.0.0"
+
+    project_id   = "e00049-projects-workspace"
+    network_name = "mynetwork"
+    routing_mode = "GLOBAL"
+
+    subnets = [
+        {
+            subnet_name           = "subnet-01"
+            subnet_ip             = "10.10.10.0/24"
+            subnet_region         = "us-central1"
+        },
+        {
+            subnet_name           = "subnet-02"
+            subnet_ip             = "10.10.20.0/24"
+            subnet_region         = "us-central1"
+            subnet_private_access = "true"
+            subnet_flow_logs      = "true"
+        }
+    ]
+}
+
+
+# -------------------------------------------------------------------------------------
+
+resource "google_compute_instance" "instance" {
+  count        = length(var.instance_names)
+  name         = var.instance_names[count.index]
+  zone         = var.zone
+  machine_type = var.machine-type
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-10"
+      }
+  }
+  
+  metadata_startup_script = <<-EOT
+    #!/bin/bash
+  EOT
+  
+  allow_stopping_for_update = true
+
+  network_interface {
+    network = module.network.network_name
+
+    subnetwork = count.index == 0 ? module.network.subnet_names[0] : module.network.subnet_names[1]
+  }
+}
+
+# --------------------------------------------------------------------------------
+
+
+# Create the firewall rule
+resource "google_compute_firewall" "tf-firewall" {
+  name    = "tf-firewall"
+  network = module.network.network_name
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+}
+
+resource "google_compute_instance" "instance" {
+  count        = length(var.instance_names)
+  name         = var.instance_names[count.index]
+  zone         = var.zone
+  machine_type = var.machine-type
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-10"
+      }
+  }
+
+  # ---------------------------------------------------------------------------------
+
+
+
+
+  terraform import module.instances.google_compute_instance.tf-instance-1 3439972493128955138
+
+  terraform import module.instances.google_compute_instance.tf-instance-2 6554577467885023864
+
+
+
+resource "google_storage_bucket" "storage-bucket" {
+  name          = "e00049-projects-workspace"
+  location      = "US"
+  force_destroy = true
+  uniform_bucket_level_access = true
+}
+
